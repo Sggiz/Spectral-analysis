@@ -1,0 +1,5 @@
+#!bin/bash
+clear
+target=$1
+
+gcc $target.c -Wall -Og -o _build/$target -lm
