@@ -5,4 +5,6 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include <signal.h>
+
 #endif
