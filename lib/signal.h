@@ -16,8 +16,8 @@ typedef struct {
 Sig* emptySig(int len, float fs);
 Sig* initSig(int len, float fs, float fun(float));
 Sig* zeroSig(int len, float fs);
-Sig* sinSig(int len, float fs, float amp, float omega, float phi);
-Sig* harmonicSig(int len, float fs, int nb_harmonics, float amp[], float omega[], float phi[]);
+Sig* sinSig(int len, float fs, float amp, float freq, float phi);
+Sig* harmonicSig(int len, float fs, int nb_harmonics, float amp[], float freq[], float phi[]);
 
 Sig* addSig(Sig* s, Sig* r);
 Sig* multSig(Sig* sig, Sig* window);

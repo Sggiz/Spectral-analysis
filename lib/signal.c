@@ -27,21 +27,21 @@ Sig* zeroSig(int len, float fs) {
     return sig;
 }
 
-Sig* sinSig(int len, float fs, float amp, float omega, float phi) {
+Sig* sinSig(int len, float fs, float amp, float freq, float phi) {
     Sig *sig = emptySig(len, fs);
     int i;
     for (i=0; i<len; i++) {
-        sig->s[i] = amp * sinf( omega * i/fs + phi );
+        sig->s[i] = amp * sinf( 2*PI*freq * i/fs + phi );
     }
     return sig;
 }
 
-Sig* harmonicSig(int len, float fs, int nb_harmonics, float amp[], float omega[], float phi[]) {
+Sig* harmonicSig(int len, float fs, int nb_harmonics, float amp[], float freq[], float phi[]) {
     Sig *sig = zeroSig(len, fs);
     int p, i;
     for (i=0; i<len; i++) {
         for (p=0; p<nb_harmonics; p++) {
-            sig->s[i] += amp[p] * sinf( omega[p] * i/fs + phi[p] );
+            sig->s[i] += amp[p] * sinf( 2*PI*freq[p] * i/fs + phi[p] );
         }
     }
     return sig;
