@@ -4,6 +4,9 @@
 
 Sig* emptySig(int len, float fs) {
     Sig *sig = malloc(sizeof(sig) + len * sizeof(*sig->s));
+
+    if (sig==NULL) exit(EXIT_FAILURE);
+
     sig->len = len;
     sig->fs = fs;
     return sig;
@@ -45,6 +48,17 @@ Sig* harmonicSig(int len, float fs, int nb_harmonics, float fond_freq, float amp
         }
     }
     return sig;
+}
+
+
+// Information retrieval
+
+int getTruncatedLength(Sig* sig) {
+    int N = sig->len;
+    while (N>0 && sig->s[N-1] == 0) {
+        N--;
+    }
+    return N;
 }
 
 
@@ -142,6 +156,21 @@ Sig* reverseSig(Sig* sig) {
     }
 
     return new_sig;
+}
+
+Sig* paddingSig(Sig* sig, int p) {
+    int len = sig->len + p;
+    Sig* padded_sig = emptySig(len, sig->fs);
+
+    int i;
+    for (i=0; i<sig->len; i++) {
+        padded_sig->s[i] = sig->s[i];
+    }
+    for (i=sig->len; i<len; i++) {
+        padded_sig->s[i] = 0.;
+    }
+
+    return padded_sig;
 }
 
 

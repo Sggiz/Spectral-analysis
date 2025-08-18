@@ -10,6 +10,7 @@
 typedef Sig Spectre;
 
 float getDfSpectre(Spectre* spect);
+Spectre* formatSpectre(Spectre* spect, int sig_len);
 
 Spectre* computeNaiveFourier(Sig* sig);
 

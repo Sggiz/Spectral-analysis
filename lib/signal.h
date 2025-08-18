@@ -19,6 +19,8 @@ Sig* zeroSig(int len, float fs);
 Sig* sinSig(int len, float fs, float amp, float freq, float phi);
 Sig* harmonicSig(int len, float fs, int nb_harmonics, float fond_freq, float amp[], float phi[]);
 
+int getTruncatedLength(Sig* sig);
+
 Sig* addSig(Sig* s, Sig* r);
 Sig* multSig(Sig* sig, Sig* window);
 Sig* convolutionSig(Sig* sig, Sig* window);
@@ -26,6 +28,7 @@ Sig* convolutionSig(Sig* sig, Sig* window);
 Sig* extractSig(Sig* sig, int start_index, int extract_length);
 
 Sig* reverseSig(Sig* sig);
+Sig* paddingSig(Sig* sig, int p);
 
 void printSig(Sig *sig);
 
