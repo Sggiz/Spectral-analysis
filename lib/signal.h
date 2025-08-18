@@ -5,22 +5,27 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define PI 3.141592
+#define PI acosf(-1)
 
 typedef struct {
     int len;
+    float fs;
     float s[];
 } Sig;
 
-Sig* emptySig(int len);
-Sig* initSig(int len, float fun(int));
-Sig* emptySig(int len);
-Sig* initSig(int len, float fun(int)); 
-Sig* zeroSig(int len);
-Sig* sinSig(int len, float amp, float omega, float phi);
+Sig* emptySig(int len, float fs);
+Sig* initSig(int len, float fs, float fun(float));
+Sig* zeroSig(int len, float fs);
+Sig* sinSig(int len, float fs, float amp, float omega, float phi);
+Sig* harmonicSig(int len, float fs, int nb_harmonics, float amp[], float omega[], float phi[]);
 
 Sig* addSig(Sig* s, Sig* r);
 Sig* multSig(Sig* sig, Sig* window);
+Sig* convolutionSig(Sig* sig, Sig* window);
+
+Sig* extractSig(Sig* sig, int start_index, int extract_length);
+
+Sig* reverseSig(Sig* sig);
 
 void printSig(Sig *sig);
 
