@@ -36,12 +36,12 @@ Sig* sinSig(int len, float fs, float amp, float freq, float phi) {
     return sig;
 }
 
-Sig* harmonicSig(int len, float fs, int nb_harmonics, float amp[], float freq[], float phi[]) {
+Sig* harmonicSig(int len, float fs, int nb_harmonics, float fond_freq, float amp[], float phi[]) {
     Sig *sig = zeroSig(len, fs);
     int p, i;
     for (i=0; i<len; i++) {
         for (p=0; p<nb_harmonics; p++) {
-            sig->s[i] += amp[p] * sinf( 2*PI*freq[p] * i/fs + phi[p] );
+            sig->s[i] += amp[p] * sinf( 2*PI*fond_freq*p * i/fs + phi[p] );
         }
     }
     return sig;
