@@ -12,10 +12,10 @@ In order to simplify the FFT implementation, the entry signal of length $N$ is p
 
 To find how the entry signal has to be padded (calculating p), we notice the following conditions :
 
-> $2^{b-1} < N \leq 2^b$
-> $b-1 < \log_2 N \leq b$
-> $b = \lceil \log_2 N \rceil$
-> thus:
+> $2^{b-1} < N \leq 2^b$ \
+> $b-1 < \log_2 N \leq b$ \
+> $b = \lceil \log_2 N \rceil$ \
+> thus: \
 > $p = 2^b - N = 2^{\lceil \log_2 N \rceil} - N$
 
 ### 2. FFT principle
@@ -40,9 +40,9 @@ $$ Y(k) = \sum_{n=0}^{N-1} \omega^{kn} X(n) $$
 
 And knowing that $Y_{\mathsf{even}}$ and $Y_{\mathsf{odd}}$'s corresponding constants is $\omega^2$ :
 
-$$ Y_{\mathsf{even}}(k) = \sum_{n=0}^{\frac{N}{2}-1} (\omega^2)^kn X(2n)$$
+$$ Y_{\mathsf{even}}(k) = \sum_{n=0}^{\frac{N}{2}-1} (\omega^2)^{kn} X(2n)$$
 
-$$ Y_{\mathsf{odd}}(k) = \sum_{n=0}^{\frac{N}{2}-1} (\omega^2)^kn X(2n+1) $$
+$$ Y_{\mathsf{odd}}(k) = \sum_{n=0}^{\frac{N}{2}-1} (\omega^2)^{kn} X(2n+1) $$
 
 With these equations we easily prove, by dividing the first sum into two sums with alternating terms, that if $k = 1, \ldots, \frac{N}{2} -1$ :
 
