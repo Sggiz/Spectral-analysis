@@ -76,6 +76,27 @@ int argmaxSig(Sig* sig) {
     return i_max;
 }
 
+float maxSig(Sig* sig) {
+    return sig->s[argmaxSig(sig)];
+}
+
+int argminSig(Sig* sig) {
+    int i_min = 0;
+
+    int i;
+    for (i=1; i<sig->len; i++) {
+        if (sig->s[i] < sig->s[i_min]) {
+            i_min = i;
+        }
+    }
+
+    return i_min;
+}
+
+float minSig(Sig* sig) {
+    return sig->s[argminSig(sig)];
+}
+
 
 // Signal interactions
 
