@@ -3,7 +3,9 @@
 // Initialisation functions
 
 Sig* emptySig(int len, float fs) {
-    Sig *sig = malloc(sizeof(sig) + len * sizeof(*sig->s));
+    if (len <= 0) exit(EXIT_FAILURE);
+
+    Sig *sig = malloc(sizeof(Sig) + len * sizeof(float));
 
     if (sig==NULL) exit(EXIT_FAILURE);
 
@@ -61,6 +63,19 @@ int getTruncatedLength(Sig* sig) {
     return N;
 }
 
+int argmaxSig(Sig* sig) {
+    int i_max = 0;
+
+    int i;
+    for (i=1; i<sig->len; i++) {
+        if (sig->s[i] > sig->s[i_max]) {
+            i_max = i;
+        }
+    }
+
+    return i_max;
+}
+
 
 // Signal interactions
 
@@ -107,6 +122,7 @@ Sig* multSig(Sig*  sig, Sig* window) {
     return new_sig;
 }
 
+// Wrong definition of convolution
 Sig* convolutionSig(Sig* sig, Sig* window) {
     if (sig->fs != window->fs) exit(EXIT_FAILURE);
     
@@ -134,11 +150,11 @@ Sig* extractSig(Sig* sig, int start_index, int extract_length) {
 
     int i;
     for (i=start_index; i<start_index+extract_length; i++) {
-        if (i < sig->len) {
-            new_sig->s[i] = sig->s[i];
+        if (0 <= i && i < sig->len) {
+            new_sig->s[i-start_index] = sig->s[i];
         }
         else {
-            new_sig->s[i] = 0.f;
+            new_sig->s[i-start_index] = 0.f;
         }
     }
 
@@ -171,6 +187,18 @@ Sig* paddingSig(Sig* sig, int p) {
     }
 
     return padded_sig;
+}
+
+Sig* deriveSig(Sig* sig) {
+    Sig* derived_sig = emptySig(sig->len, sig->fs);
+    derived_sig->s[0] = 0.;
+
+    int i;
+    for (i=1; i<sig->len; i++) {
+        derived_sig->s[i] = (sig->s[i] - sig->s[i-1]) * sig->fs;
+    }
+
+    return derived_sig;
 }
 
 

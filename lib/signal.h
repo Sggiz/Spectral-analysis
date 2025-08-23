@@ -29,6 +29,7 @@ Sig* extractSig(Sig* sig, int start_index, int extract_length);
 
 Sig* reverseSig(Sig* sig);
 Sig* paddingSig(Sig* sig, int p);
+Sig* deriveSig(Sig* sig);
 
 void printSig(Sig *sig);
 

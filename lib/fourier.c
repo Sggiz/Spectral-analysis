@@ -7,6 +7,13 @@ float getDfSpectre(Spectre* spect) {
 }
 
 
+// Padding assistance
+
+int supBase2(int n) {
+    return (int)pow(2., ceilf(log2f(n)));
+}
+
+
 // Fourier transforms
 
 Spectre* computeNaiveFourier(Sig* sig) {
@@ -27,7 +34,7 @@ Spectre* computeNaiveFourier(Sig* sig) {
 }
 
 
-float complex* _constr_FFT(Sig* sig) {
+static float complex* _constr_FFT(Sig* sig) {
     // Ensure sig's length is of the form N = 2^b
     int N = sig->len;
 
@@ -71,8 +78,7 @@ Spectre* computeFFT(Sig* sig) {
     Sig* padded_sig = NULL;
 
     int N = sig->len;
-    int b = ceilf(log2f(N));
-    int p = (int)pow(2., b) - N;
+    int p = supBase2(N) - N;
 
     if (p==0) padded_sig = sig;
     else {
@@ -90,4 +96,63 @@ Spectre* computeFFT(Sig* sig) {
     free(complex_spectre);
 
     return spect;
+}
+
+
+// Spectrogramms
+
+int getIndexSpectrogramm(Spectrogramm* sg, int n, int p) {
+    if (n<0 || n>=sg->n_len || p<0 || p>=sg->p_len)
+        exit(EXIT_FAILURE);
+
+    return n * sg->p_len + p;
+}
+
+float getValueSpectrogramm(Spectrogramm* sg, int n, int p) {
+    return sg->s[getIndexSpectrogramm(sg, n, p)];
+}
+
+Spectrogramm* constructSpectrogramm(Sig* sig, int win_len, int hop) {
+    if (win_len<1 || hop<1) exit(EXIT_FAILURE);
+
+    int n_len = sig->len / hop;
+    int p_len = supBase2(win_len);
+
+    float* s = malloc(n_len * p_len * sizeof(float));
+    Spectrogramm* sg = malloc(sizeof(Spectrogramm));
+    sg->s = s;
+
+    if (sg==NULL) exit(EXIT_FAILURE);
+    
+    sg->n_len = n_len;
+    sg->p_len = p_len;
+    sg->fs = sig->fs;
+    sg->dt = hop/sig->fs;
+    
+    int n, p;
+    for (n=0; n<n_len; n++) {
+        Sig* extracted_sig = extractSig(sig, hop*n, win_len);
+        Spectre* spect = computeFFT(extracted_sig);
+
+        for (p=0; p<p_len; p++) {
+            sg->s[getIndexSpectrogramm(sg, n, p)] = spect->s[p];
+        }
+
+        free(extracted_sig);
+        free(spect);
+    }
+
+    return sg;
+}
+
+void printSpectrogramm(Spectrogramm* sg) {
+    printf("Spectrogramm of size (n,p) = (%d,%d) :\n", sg->n_len, sg->p_len);
+    int n, p;
+    for (n=0; n<sg->n_len; n++) {
+        printf("%d :", n);
+        for (p=0; p<sg->p_len; p++) {
+            printf(" %.0f", sg->s[getIndexSpectrogramm(sg, n, p)]);
+        }
+        printf("\n");
+    }
 }

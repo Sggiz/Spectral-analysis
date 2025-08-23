@@ -30,7 +30,7 @@ We'll call their respective transforms $Y$, $Y_{\mathsf{even}}$ and $Y_{\mathsf{
 
 $$ Y(k) = \sum_{n=0}^{N-1} X(n) \exp(-2i \pi k \frac{n}{N}) $$
 
-To easy the following expressions, we introduce the complex constant $\omega = \exp(-2i \pi /N)$ which verifies :
+To ease the following expressions, we introduce the complex constant $\omega = \exp(-2i \pi /N)$ which verifies :
 
 $$ \omega^{n} = \omega^{n \mod N} $$
 
