@@ -6,13 +6,14 @@
 
 #include "signal.h"
 
-#define WIN_WIDTH 140
+#define WIN_WIDTH 300
 #define WIN_HEIGHT 20
 #define NB_PIXELS WIN_HEIGHT  * WIN_WIDTH
 
 char plotting_char = '#';
 
-void plotSig(Sig* sig);
+void scaledPlottingSig(Sig* sig);
+void directPlottingSig(Sig* sig);
 
 
 #include "plotting.c"

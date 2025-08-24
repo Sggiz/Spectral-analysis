@@ -11,7 +11,7 @@ int main() {
     Sig *sig1 = sinSig(30, 10, 1., 4, 0);
 
     float freq = 1., amp[]={0.5,5,3,1}, phi[]={PI/2,0,0, PI};
-    Sig *sig2 = harmonicSig(128, 100, 4, freq, amp, phi);
+    Sig *sig2 = harmonicSig(100, 100, 4, freq, amp, phi);
 
     Spectre* F_sig2 = NULL;
     // F_sig2 = computeNaiveFourier(sig2);
@@ -25,10 +25,12 @@ int main() {
 
     printf("\n\n");
 
-    plotSig(sig0);
-    plotSig(sig1);
-    plotSig(sig2);
-    plotSig(F_sig2);
+    scaledPlottingSig(sig0);
+    scaledPlottingSig(sig1);
+    scaledPlottingSig(sig2);
+    scaledPlottingSig(F_sig2);
+    directPlottingSig(sig2);
+    directPlottingSig(F_sig2);
 
     free(sig0);
     free(sig1);
